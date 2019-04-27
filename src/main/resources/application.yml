@@ -2,11 +2,10 @@ mybatis:
   mapper-locations: classpath*:mapper/customer/*.xml
   type-aliases-package: com.mds.matrix.customer.model
 
-
-spring:
-  datasource:
-    ds-0:
-      druid:
+sharding:
+  jdbc:
+    datasource:
+      ds_0:
         jdbc-url: jdbc:mysql://localhost:3306/maidushi
         driver-class-name: org.mariadb.jdbc.Driver
         username: root
