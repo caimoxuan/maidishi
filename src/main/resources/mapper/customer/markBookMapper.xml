@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mds.matrix.customer.mapper.MarkBookDao">
+	<resultMap id="BaseResultMap" type="MarkBook" >
+		<result column="id" property="id" />
+		<result column="open_id" property="openId" />
+		<result column="mark_type" property="markType" />
+		<result column="mark_id" property="markId" />
+		<result column="mark_name" property="markName" />
+		<result column="extra" property="extra" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id = "table">
+		t_mark_book
+	</sql>
+
+	<sql id = "columns">
+		id, open_id, mark_type, mark_id, mark_name, 
+		extra, create_time, update_time
+	</sql>
+
+	<sql id = "values">
+		#{id}, #{openId}, #{markType}, #{markId}, #{markName}, 
+		#{extra}, #{createTime}, #{updateTime}
+	</sql>
+
+	<select id = "select" parameterType = "MarkBook" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid="table"/> 
+		<where>
+			<if test = "id != null">AND id = #{id}</if>
+			<if test = "openId != null and openId != '' ">AND open_id = #{openId}</if>
+			<if test = "markType != null">AND mark_type = #{markType}</if>
+			<if test = "markId != null and markId != '' ">AND mark_id = #{markId}</if>
+			<if test = "markName != null and markName != '' ">AND mark_name = #{markName}</if>
+			<if test = "extra != null and extra != '' ">AND extra = #{extra}</if>
+			<if test = "createTime != null">AND create_time = #{createTime}</if>
+			<if test = "updateTime != null">AND update_time = #{updateTime}</if>
+		</where>
+	</select>
+
+	<insert id = "insert" keyProperty = "id" parameterType = "MarkBook" useGeneratedKeys = "true">
+		insert into <include refid="table"/>(<include refid="columns"/>)
+		values (<include refid="values"/>)
+	</insert>
+
+	<delete id = "delete" parameterType = "String">
+		delete from <include refid="table"/>
+		where id = #{id}
+	</delete>
+
+	<update id = "update" parameterType = "MarkBook">
+		update <include refid="table"/>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test = "id != null">id = #{id},</if>
+			<if test = "openId != null and openId != '' ">open_id = #{openId},</if>
+			<if test = "markType != null">mark_type = #{markType},</if>
+			<if test = "markId != null and markId != '' ">mark_id = #{markId},</if>
+			<if test = "markName != null and markName != '' ">mark_name = #{markName},</if>
+			<if test = "extra != null and extra != '' ">extra = #{extra},</if>
+			<if test = "createTime != null">create_time = #{createTime},</if>
+			<if test = "updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id = "getById" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid = "table" />
+		where
+		id = #{id}
+	</select>
+
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mds.matrix.customer.mapper.CarDao">
+	<resultMap id="BaseResultMap" type="Car" >
+		<result column="id" property="id" />
+		<result column="car_id" property="carId" />
+		<result column="car_status" property="carStatus" />
+		<result column="rent_time" property="rentTime" />
+		<result column="gross_profit" property="grossProfit" />
+		<result column="deposit" property="deposit" />
+		<result column="rent_user" property="rentUser" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id = "table">
+		t_car
+	</sql>
+
+	<sql id = "columns">
+		id, car_id, car_status, rent_time, gross_profit, 
+		deposit, rent_user, create_time, update_time
+	</sql>
+
+	<sql id = "values">
+		#{id}, #{carId}, #{carStatus}, #{rentTime}, #{grossProfit}, 
+		#{deposit}, #{rentUser}, #{createTime}, #{updateTime}
+	</sql>
+
+	<select id = "select" parameterType = "Car" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid="table"/> 
+		<where>
+			<if test = "id != null">AND id = #{id}</if>
+			<if test = "carId != null and carId != '' ">AND car_id = #{carId}</if>
+			<if test = "carStatus != null">AND car_status = #{carStatus}</if>
+			<if test = "rentTime != null">AND rent_time = #{rentTime}</if>
+			<if test = "grossProfit != null">AND gross_profit = #{grossProfit}</if>
+			<if test = "deposit != null">AND deposit = #{deposit}</if>
+			<if test = "rentUser != null and rentUser != '' ">AND rent_user = #{rentUser}</if>
+			<if test = "createTime != null">AND create_time = #{createTime}</if>
+			<if test = "updateTime != null">AND update_time = #{updateTime}</if>
+		</where>
+	</select>
+
+	<insert id = "insert" keyProperty = "id" parameterType = "Car" useGeneratedKeys = "true">
+		insert into <include refid="table"/>(<include refid="columns"/>)
+		values (<include refid="values"/>)
+	</insert>
+
+	<delete id = "delete" parameterType = "String">
+		delete from <include refid="table"/>
+		where id = #{id}
+	</delete>
+
+	<update id = "update" parameterType = "Car">
+		update <include refid="table"/>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test = "id != null">id = #{id},</if>
+			<if test = "carId != null and carId != '' ">car_id = #{carId},</if>
+			<if test = "carStatus != null">car_status = #{carStatus},</if>
+			<if test = "rentTime != null">rent_time = #{rentTime},</if>
+			<if test = "grossProfit != null">gross_profit = #{grossProfit},</if>
+			<if test = "deposit != null">deposit = #{deposit},</if>
+			<if test = "rentUser != null and rentUser != '' ">rent_user = #{rentUser},</if>
+			<if test = "createTime != null">create_time = #{createTime},</if>
+			<if test = "updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id = "getById" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid = "table" />
+		where
+		id = #{id}
+	</select>
+
+</mapper>

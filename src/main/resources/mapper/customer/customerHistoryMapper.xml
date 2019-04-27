@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mds.matrix.customer.mapper.CustomerHistoryDao">
+	<resultMap id="BaseResultMap" type="CustomerHistory" >
+		<result column="id" property="id" />
+		<result column="open_id" property="openId" />
+		<result column="user_name" property="userName" />
+		<result column="operator_type" property="operatorType" />
+		<result column="operator_date" property="operatorDate" />
+		<result column="operator_time" property="operatorTime" />
+		<result column="amount" property="amount" />
+		<result column="target_user_name" property="targetUserName" />
+		<result column="target_user_id" property="targetUserId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id = "table">
+		t_customer_history
+	</sql>
+
+	<sql id = "columns">
+		id, open_id, user_name, operator_type, operator_date, 
+		operator_time, amount, target_user_name, target_user_id, create_time, 
+		update_time
+	</sql>
+
+	<sql id = "values">
+		#{id}, #{openId}, #{userName}, #{operatorType}, #{operatorDate}, 
+		#{operatorTime}, #{amount}, #{targetUserName}, #{targetUserId}, #{createTime}, 
+		#{updateTime}
+	</sql>
+
+	<select id = "select" parameterType = "CustomerHistory" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid="table"/> 
+		<where>
+			<if test = "id != null">AND id = #{id}</if>
+			<if test = "openId != null and openId != '' ">AND open_id = #{openId}</if>
+			<if test = "userName != null and userName != '' ">AND user_name = #{userName}</if>
+			<if test = "operatorType != null">AND operator_type = #{operatorType}</if>
+			<if test = "operatorDate != null and operatorDate != '' ">AND operator_date = #{operatorDate}</if>
+			<if test = "operatorTime != null">AND operator_time = #{operatorTime}</if>
+			<if test = "amount != null">AND amount = #{amount}</if>
+			<if test = "targetUserName != null and targetUserName != '' ">AND target_user_name = #{targetUserName}</if>
+			<if test = "targetUserId != null and targetUserId != '' ">AND target_user_id = #{targetUserId}</if>
+			<if test = "createTime != null">AND create_time = #{createTime}</if>
+			<if test = "updateTime != null">AND update_time = #{updateTime}</if>
+		</where>
+	</select>
+
+	<insert id = "insert" keyProperty = "id" parameterType = "CustomerHistory" useGeneratedKeys = "true">
+		insert into <include refid="table"/>(<include refid="columns"/>)
+		values (<include refid="values"/>)
+	</insert>
+
+	<delete id = "delete" parameterType = "String">
+		delete from <include refid="table"/>
+		where id = #{id}
+	</delete>
+
+	<update id = "update" parameterType = "CustomerHistory">
+		update <include refid="table"/>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test = "id != null">id = #{id},</if>
+			<if test = "openId != null and openId != '' ">open_id = #{openId},</if>
+			<if test = "userName != null and userName != '' ">user_name = #{userName},</if>
+			<if test = "operatorType != null">operator_type = #{operatorType},</if>
+			<if test = "operatorDate != null and operatorDate != '' ">operator_date = #{operatorDate},</if>
+			<if test = "operatorTime != null">operator_time = #{operatorTime},</if>
+			<if test = "amount != null">amount = #{amount},</if>
+			<if test = "targetUserName != null and targetUserName != '' ">target_user_name = #{targetUserName},</if>
+			<if test = "targetUserId != null and targetUserId != '' ">target_user_id = #{targetUserId},</if>
+			<if test = "createTime != null">create_time = #{createTime},</if>
+			<if test = "updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id = "getById" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid = "table" />
+		where
+		id = #{id}
+	</select>
+
+</mapper>

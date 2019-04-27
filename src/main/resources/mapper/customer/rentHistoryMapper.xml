@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mds.matrix.customer.mapper.RentHistoryDao">
+	<resultMap id="BaseResultMap" type="RentHistory" >
+		<result column="id" property="id" />
+		<result column="device_id" property="deviceId" />
+		<result column="device_type" property="deviceType" />
+		<result column="fit_device_id" property="fitDeviceId" />
+		<result column="rider_id" property="riderId" />
+		<result column="rider_name" property="riderName" />
+		<result column="rent_start" property="rentStart" />
+		<result column="rent_end" property="rentEnd" />
+		<result column="rent_type" property="rentType" />
+		<result column="income" property="income" />
+		<result column="operator_user_id" property="operatorUserId" />
+		<result column="operator_user_name" property="operatorUserName" />
+		<result column="remark" property="remark" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id = "table">
+		t_rent_history
+	</sql>
+
+	<sql id = "columns">
+		id, device_id, device_type, fit_device_id, rider_id, 
+		rider_name, rent_start, rent_end, rent_type, income, 
+		operator_user_id, operator_user_name, remark, create_time, update_time
+	</sql>
+
+	<sql id = "values">
+		#{id}, #{deviceId}, #{deviceType}, #{fitDeviceId}, #{riderId}, 
+		#{riderName}, #{rentStart}, #{rentEnd}, #{rentType}, #{income}, 
+		#{operatorUserId}, #{operatorUserName}, #{remark}, #{createTime}, #{updateTime}
+	</sql>
+
+	<select id = "select" parameterType = "RentHistory" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid="table"/> 
+		<where>
+			<if test = "id != null">AND id = #{id}</if>
+			<if test = "deviceId != null and deviceId != '' ">AND device_id = #{deviceId}</if>
+			<if test = "deviceType != null">AND device_type = #{deviceType}</if>
+			<if test = "fitDeviceId != null and fitDeviceId != '' ">AND fit_device_id = #{fitDeviceId}</if>
+			<if test = "riderId != null and riderId != '' ">AND rider_id = #{riderId}</if>
+			<if test = "riderName != null and riderName != '' ">AND rider_name = #{riderName}</if>
+			<if test = "rentStart != null">AND rent_start = #{rentStart}</if>
+			<if test = "rentEnd != null">AND rent_end = #{rentEnd}</if>
+			<if test = "rentType != null">AND rent_type = #{rentType}</if>
+			<if test = "income != null">AND income = #{income}</if>
+			<if test = "operatorUserId != null and operatorUserId != '' ">AND operator_user_id = #{operatorUserId}</if>
+			<if test = "operatorUserName != null and operatorUserName != '' ">AND operator_user_name = #{operatorUserName}</if>
+			<if test = "remark != null and remark != '' ">AND remark = #{remark}</if>
+			<if test = "createTime != null">AND create_time = #{createTime}</if>
+			<if test = "updateTime != null">AND update_time = #{updateTime}</if>
+		</where>
+	</select>
+
+	<insert id = "insert" keyProperty = "id" parameterType = "RentHistory" useGeneratedKeys = "true">
+		insert into <include refid="table"/>(<include refid="columns"/>)
+		values (<include refid="values"/>)
+	</insert>
+
+	<delete id = "delete" parameterType = "String">
+		delete from <include refid="table"/>
+		where id = #{id}
+	</delete>
+
+	<update id = "update" parameterType = "RentHistory">
+		update <include refid="table"/>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test = "id != null">id = #{id},</if>
+			<if test = "deviceId != null and deviceId != '' ">device_id = #{deviceId},</if>
+			<if test = "deviceType != null">device_type = #{deviceType},</if>
+			<if test = "fitDeviceId != null and fitDeviceId != '' ">fit_device_id = #{fitDeviceId},</if>
+			<if test = "riderId != null and riderId != '' ">rider_id = #{riderId},</if>
+			<if test = "riderName != null and riderName != '' ">rider_name = #{riderName},</if>
+			<if test = "rentStart != null">rent_start = #{rentStart},</if>
+			<if test = "rentEnd != null">rent_end = #{rentEnd},</if>
+			<if test = "rentType != null">rent_type = #{rentType},</if>
+			<if test = "income != null">income = #{income},</if>
+			<if test = "operatorUserId != null and operatorUserId != '' ">operator_user_id = #{operatorUserId},</if>
+			<if test = "operatorUserName != null and operatorUserName != '' ">operator_user_name = #{operatorUserName},</if>
+			<if test = "remark != null and remark != '' ">remark = #{remark},</if>
+			<if test = "createTime != null">create_time = #{createTime},</if>
+			<if test = "updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id = "getById" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid = "table" />
+		where
+		id = #{id}
+	</select>
+
+</mapper>

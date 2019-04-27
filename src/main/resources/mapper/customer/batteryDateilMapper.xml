@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mds.matrix.customer.mapper.BatteryDateilDao">
+	<resultMap id="BaseResultMap" type="BatteryDateil" >
+		<result column="id" property="id" />
+		<result column="battery_id" property="batteryId" />
+		<result column="battery_status" property="batteryStatus" />
+		<result column="order_batch" property="orderBatch" />
+		<result column="order_time" property="orderTime" />
+		<result column="change_time" property="changeTime" />
+		<result column="total_rent_time" property="totalRentTime" />
+		<result column="battery_img" property="batteryImg" />
+		<result column="rent_info" property="rentInfo" />
+		<result column="use_status" property="useStatus" />
+		<result column="repair_time" property="repairTime" />
+		<result column="store_time" property="storeTime" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id = "table">
+		t_battery_dateil
+	</sql>
+
+	<sql id = "columns">
+		id, battery_id, battery_status, order_batch, order_time, 
+		change_time, total_rent_time, battery_img, rent_info, use_status, 
+		repair_time, store_time, create_time, update_time
+	</sql>
+
+	<sql id = "values">
+		#{id}, #{batteryId}, #{batteryStatus}, #{orderBatch}, #{orderTime}, 
+		#{changeTime}, #{totalRentTime}, #{batteryImg}, #{rentInfo}, #{useStatus}, 
+		#{repairTime}, #{storeTime}, #{createTime}, #{updateTime}
+	</sql>
+
+	<select id = "select" parameterType = "BatteryDateil" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid="table"/> 
+		<where>
+			<if test = "id != null">AND id = #{id}</if>
+			<if test = "batteryId != null and batteryId != '' ">AND battery_id = #{batteryId}</if>
+			<if test = "batteryStatus != null">AND battery_status = #{batteryStatus}</if>
+			<if test = "orderBatch != null and orderBatch != '' ">AND order_batch = #{orderBatch}</if>
+			<if test = "orderTime != null">AND order_time = #{orderTime}</if>
+			<if test = "changeTime != null">AND change_time = #{changeTime}</if>
+			<if test = "totalRentTime != null">AND total_rent_time = #{totalRentTime}</if>
+			<if test = "batteryImg != null and batteryImg != '' ">AND battery_img = #{batteryImg}</if>
+			<if test = "rentInfo != null and rentInfo != '' ">AND rent_info = #{rentInfo}</if>
+			<if test = "useStatus != null">AND use_status = #{useStatus}</if>
+			<if test = "repairTime != null">AND repair_time = #{repairTime}</if>
+			<if test = "storeTime != null">AND store_time = #{storeTime}</if>
+			<if test = "createTime != null">AND create_time = #{createTime}</if>
+			<if test = "updateTime != null">AND update_time = #{updateTime}</if>
+		</where>
+	</select>
+
+	<insert id = "insert" keyProperty = "id" parameterType = "BatteryDateil" useGeneratedKeys = "true">
+		insert into <include refid="table"/>(<include refid="columns"/>)
+		values (<include refid="values"/>)
+	</insert>
+
+	<delete id = "delete" parameterType = "String">
+		delete from <include refid="table"/>
+		where id = #{id}
+	</delete>
+
+	<update id = "update" parameterType = "BatteryDateil">
+		update <include refid="table"/>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test = "id != null">id = #{id},</if>
+			<if test = "batteryId != null and batteryId != '' ">battery_id = #{batteryId},</if>
+			<if test = "batteryStatus != null">battery_status = #{batteryStatus},</if>
+			<if test = "orderBatch != null and orderBatch != '' ">order_batch = #{orderBatch},</if>
+			<if test = "orderTime != null">order_time = #{orderTime},</if>
+			<if test = "changeTime != null">change_time = #{changeTime},</if>
+			<if test = "totalRentTime != null">total_rent_time = #{totalRentTime},</if>
+			<if test = "batteryImg != null and batteryImg != '' ">battery_img = #{batteryImg},</if>
+			<if test = "rentInfo != null and rentInfo != '' ">rent_info = #{rentInfo},</if>
+			<if test = "useStatus != null">use_status = #{useStatus},</if>
+			<if test = "repairTime != null">repair_time = #{repairTime},</if>
+			<if test = "storeTime != null">store_time = #{storeTime},</if>
+			<if test = "createTime != null">create_time = #{createTime},</if>
+			<if test = "updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id = "getById" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid = "table" />
+		where
+		id = #{id}
+	</select>
+
+</mapper>

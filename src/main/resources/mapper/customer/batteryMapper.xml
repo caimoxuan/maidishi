@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mds.matrix.customer.mapper.BatteryDao">
+	<resultMap id="BaseResultMap" type="Battery" >
+		<result column="id" property="id" />
+		<result column="battery_id" property="batteryId" />
+		<result column="battery_status" property="batteryStatus" />
+		<result column="rent_time" property="rentTime" />
+		<result column="test_code" property="testCode" />
+		<result column="car_id" property="carId" />
+		<result column="rent_user_name" property="rentUserName" />
+		<result column="rent_user_id" property="rentUserId" />
+		<result column="total_income" property="totalIncome" />
+		<result column="version" property="version" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id = "table">
+		t_battery
+	</sql>
+
+	<sql id = "columns">
+		id, battery_id, battery_status, rent_time, test_code, 
+		car_id, rent_user_name, rent_user_id, total_income, version, 
+		create_time, update_time
+	</sql>
+
+	<sql id = "values">
+		#{id}, #{batteryId}, #{batteryStatus}, #{rentTime}, #{testCode}, 
+		#{carId}, #{rentUserName}, #{rentUserId}, #{totalIncome}, #{version}, 
+		#{createTime}, #{updateTime}
+	</sql>
+
+	<select id = "select" parameterType = "Battery" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid="table"/> 
+		<where>
+			<if test = "id != null">AND id = #{id}</if>
+			<if test = "batteryId != null and batteryId != '' ">AND battery_id = #{batteryId}</if>
+			<if test = "batteryStatus != null">AND battery_status = #{batteryStatus}</if>
+			<if test = "rentTime != null">AND rent_time = #{rentTime}</if>
+			<if test = "testCode != null">AND test_code = #{testCode}</if>
+			<if test = "carId != null and carId != '' ">AND car_id = #{carId}</if>
+			<if test = "rentUserName != null and rentUserName != '' ">AND rent_user_name = #{rentUserName}</if>
+			<if test = "rentUserId != null and rentUserId != '' ">AND rent_user_id = #{rentUserId}</if>
+			<if test = "totalIncome != null">AND total_income = #{totalIncome}</if>
+			<if test = "version != null">AND version = #{version}</if>
+			<if test = "createTime != null">AND create_time = #{createTime}</if>
+			<if test = "updateTime != null">AND update_time = #{updateTime}</if>
+		</where>
+	</select>
+
+	<insert id = "insert" keyProperty = "id" parameterType = "Battery" useGeneratedKeys = "true">
+		insert into <include refid="table"/>(<include refid="columns"/>)
+		values (<include refid="values"/>)
+	</insert>
+
+	<delete id = "delete" parameterType = "String">
+		delete from <include refid="table"/>
+		where id = #{id}
+	</delete>
+
+	<update id = "update" parameterType = "Battery">
+		update <include refid="table"/>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test = "id != null">id = #{id},</if>
+			<if test = "batteryId != null and batteryId != '' ">battery_id = #{batteryId},</if>
+			<if test = "batteryStatus != null">battery_status = #{batteryStatus},</if>
+			<if test = "rentTime != null">rent_time = #{rentTime},</if>
+			<if test = "testCode != null">test_code = #{testCode},</if>
+			<if test = "carId != null and carId != '' ">car_id = #{carId},</if>
+			<if test = "rentUserName != null and rentUserName != '' ">rent_user_name = #{rentUserName},</if>
+			<if test = "rentUserId != null and rentUserId != '' ">rent_user_id = #{rentUserId},</if>
+			<if test = "totalIncome != null">total_income = #{totalIncome},</if>
+			<if test = "version != null">version = #{version},</if>
+			<if test = "createTime != null">create_time = #{createTime},</if>
+			<if test = "updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id = "getById" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid = "table" />
+		where
+		id = #{id}
+	</select>
+
+</mapper>

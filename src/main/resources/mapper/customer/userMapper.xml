@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mds.matrix.customer.mapper.UserDao">
+	<resultMap id="BaseResultMap" type="User" >
+		<result column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="user_type" property="userType" />
+		<result column="open_id" property="openId" />
+		<result column="nick_name" property="nickName" />
+		<result column="gender" property="gender" />
+		<result column="avatar_url" property="avatarUrl" />
+		<result column="country" property="country" />
+		<result column="province" property="province" />
+		<result column="city" property="city" />
+		<result column="real_name" property="realName" />
+		<result column="mobile" property="mobile" />
+		<result column="identity_id" property="identityId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id = "table">
+		t_user
+	</sql>
+
+	<sql id = "columns">
+		id, user_id, user_type, open_id, nick_name, 
+		gender, avatar_url, country, province, city, 
+		real_name, mobile, identity_id, create_time, update_time
+	</sql>
+
+	<sql id = "values">
+		#{id}, #{userId}, #{userType}, #{openId}, #{nickName}, 
+		#{gender}, #{avatarUrl}, #{country}, #{province}, #{city}, 
+		#{realName}, #{mobile}, #{identityId}, #{createTime}, #{updateTime}
+	</sql>
+
+	<select id = "select" parameterType = "User" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid="table"/> 
+		<where>
+			<if test = "id != null">AND id = #{id}</if>
+			<if test = "userId != null and userId != '' ">AND user_id = #{userId}</if>
+			<if test = "userType != null">AND user_type = #{userType}</if>
+			<if test = "openId != null and openId != '' ">AND open_id = #{openId}</if>
+			<if test = "nickName != null and nickName != '' ">AND nick_name = #{nickName}</if>
+			<if test = "gender != null">AND gender = #{gender}</if>
+			<if test = "avatarUrl != null and avatarUrl != '' ">AND avatar_url = #{avatarUrl}</if>
+			<if test = "country != null and country != '' ">AND country = #{country}</if>
+			<if test = "province != null and province != '' ">AND province = #{province}</if>
+			<if test = "city != null and city != '' ">AND city = #{city}</if>
+			<if test = "realName != null and realName != '' ">AND real_name = #{realName}</if>
+			<if test = "mobile != null">AND mobile = #{mobile}</if>
+			<if test = "identityId != null and identityId != '' ">AND identity_id = #{identityId}</if>
+			<if test = "createTime != null">AND create_time = #{createTime}</if>
+			<if test = "updateTime != null">AND update_time = #{updateTime}</if>
+		</where>
+	</select>
+
+	<insert id = "insert" keyProperty = "id" parameterType = "User" useGeneratedKeys = "true">
+		insert into <include refid="table"/>(<include refid="columns"/>)
+		values (<include refid="values"/>)
+	</insert>
+
+	<delete id = "delete" parameterType = "String">
+		delete from <include refid="table"/>
+		where id = #{id}
+	</delete>
+
+	<update id = "update" parameterType = "User">
+		update <include refid="table"/>
+		<trim prefix="SET" suffixOverrides=",">
+			<if test = "id != null">id = #{id},</if>
+			<if test = "userId != null and userId != '' ">user_id = #{userId},</if>
+			<if test = "userType != null">user_type = #{userType},</if>
+			<if test = "openId != null and openId != '' ">open_id = #{openId},</if>
+			<if test = "nickName != null and nickName != '' ">nick_name = #{nickName},</if>
+			<if test = "gender != null">gender = #{gender},</if>
+			<if test = "avatarUrl != null and avatarUrl != '' ">avatar_url = #{avatarUrl},</if>
+			<if test = "country != null and country != '' ">country = #{country},</if>
+			<if test = "province != null and province != '' ">province = #{province},</if>
+			<if test = "city != null and city != '' ">city = #{city},</if>
+			<if test = "realName != null and realName != '' ">real_name = #{realName},</if>
+			<if test = "mobile != null">mobile = #{mobile},</if>
+			<if test = "identityId != null and identityId != '' ">identity_id = #{identityId},</if>
+			<if test = "createTime != null">create_time = #{createTime},</if>
+			<if test = "updateTime != null">update_time = #{updateTime},</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<select id = "getById" resultMap = "BaseResultMap">
+		select <include refid = "columns" />
+		from <include refid = "table" />
+		where
+		id = #{id}
+	</select>
+
+</mapper>
