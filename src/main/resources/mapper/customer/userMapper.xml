@@ -93,7 +93,7 @@
 		select <include refid = "columns" />
 		from <include refid = "table" />
 		where
-		id = #{id}
+		open_id = #{openId}
 	</select>
 
 </mapper>

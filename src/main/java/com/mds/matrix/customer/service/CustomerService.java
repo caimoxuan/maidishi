@@ -16,4 +16,6 @@ public interface CustomerService {
 
     List<User> listUser(User user);
 
+    User getById(String openId);
+
 }

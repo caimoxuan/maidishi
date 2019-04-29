@@ -21,16 +21,21 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public int insert(User user) {
-        return 0;
+        return userDao.insert(user);
     }
 
     @Override
     public int update(User user) {
-        return 0;
+        return userDao.update(user);
     }
 
     @Override
     public List<User> listUser(User user) {
         return userDao.select(user);
+    }
+
+    @Override
+    public User getById(String openId) {
+        return userDao.getById(openId);
     }
 }
