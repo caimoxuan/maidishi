@@ -2,10 +2,11 @@ package com.mds.matrix.customer.controller;
 
 import com.github.pagehelper.Page;
 import com.mds.matrix.common.constant.ApiResult;
+import com.mds.matrix.common.constant.ErrorEnum;
+import com.mds.matrix.common.enums.UserType;
 import com.mds.matrix.customer.model.User;
 import com.mds.matrix.customer.service.CustomerService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +42,29 @@ public class CustomerController {
     public ApiResult<User> getUser(@RequestParam String openId) {
         ApiResult<User> result = new ApiResult<>();
         result.setData(customerService.getById(openId));
+        return result;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ApiResult<String> login(@RequestParam String openId){
+        ApiResult<String> result = new ApiResult<>();
+        User user = customerService.getById(openId);
+        if(user == null){
+            result.fail(ErrorEnum.FORBIDDEN_ACCESS);
+            return result;
+        }
+        result.setData("success");
+        return result;
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ApiResult<String> create(@RequestParam String openId){
+        ApiResult<String> result = new ApiResult<>();
+        User user = new User();
+        user.setUserType(UserType.CUSTOMER);
+        user.setOpenId(openId);
+        customerService.insert(user);
+        result.setData("success");
         return result;
     }
 

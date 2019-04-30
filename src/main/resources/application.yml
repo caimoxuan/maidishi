@@ -5,3 +5,4 @@ mybatis:
   mapper-locations: classpath*:mapper/customer/*.xml
   config-location: classpath:mybatis-config.xml
   type-aliases-package: com.mds.matrix.customer.model
+  type-handlers-package: com.mds.matrix.common.enums.handler

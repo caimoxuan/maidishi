@@ -11,4 +11,7 @@ public class ErrorEnum {
 
     public static final MdsException SYSTEM_ERROR = new MdsException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "系统异常");
 
+
+    public static final MdsException FORBIDDEN_ACCESS = new MdsException(HttpStatus.FORBIDDEN.value(), "禁止登入");
+
 }

@@ -2,6 +2,8 @@ package com.mds.matrix.customer.model;
 import java.util.Date;
 
 import java.io.Serializable;
+
+import com.mds.matrix.common.enums.UserType;
 import lombok.Data;
 
 @Data
@@ -13,7 +15,7 @@ public class User implements Serializable {
 	/** 用户id*/
 	private String userId;
 	/** 用户类型 0 管理 2 店员 4 骑手*/
-	private Integer userType;
+	private UserType userType;
 	/** 微信openId 小程序登录使用*/
 	private String openId;
 	/** 微信昵称*/
