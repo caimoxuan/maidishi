@@ -1,4 +1,4 @@
-package com.mds.matrix.common;
+package com.mds.matrix.common.constant;
 
 import com.mds.matrix.common.exception.MdsException;
 import org.springframework.http.HttpStatus;

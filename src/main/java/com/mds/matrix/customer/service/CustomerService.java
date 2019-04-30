@@ -1,5 +1,6 @@
 package com.mds.matrix.customer.service;
 
+import com.github.pagehelper.Page;
 import com.mds.matrix.customer.model.User;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface CustomerService {
 
     int update(User user);
 
-    List<User> listUser(User user);
+    Page<User> listUser(User user, int pageNo, int pageSize);
 
     User getById(String openId);
 

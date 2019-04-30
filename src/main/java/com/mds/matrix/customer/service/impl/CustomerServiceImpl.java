@@ -1,5 +1,7 @@
 package com.mds.matrix.customer.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.mds.matrix.customer.mapper.UserDao;
 import com.mds.matrix.customer.model.User;
 import com.mds.matrix.customer.service.CustomerService;
@@ -30,8 +32,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<User> listUser(User user) {
-        return userDao.select(user);
+    public Page<User> listUser(User user, int pageNo, int pageSize) {
+        return PageHelper.startPage(pageNo, pageSize).doSelectPage(() -> userDao.select(user));
     }
 
     @Override

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <!-- 应用程序输出日志的路径 -->
+    <property name="APPLICATION_LOG_FILE_HOME"
+              value="/opt/logs/logs"/>​
+    <!-- sql日志路径 -->
+    <property name="SQL_LOG_FILE_HOME"
+              value="/opt/logs/sql-logs"/>
+    <!-- 控制台输出日志的格式 -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS},${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-B3-ParentSpanId:-},%X{X-B4-fromServiceName:-},%X{X-B4-toServiceName:-},${PID:-},%thread,%-5level,%logger{50},%msg%n"/>
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="APPLICATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${APPLICATION_LOG_FILE_HOME}/ibuspay-service-%d{yyyy-MM-dd}-%i.log
+            </FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>2</MaxHistory>
+            <!-- 触发策略，达到一定条件时将通知appender，触发滚动 -->
+            <maxFileSize>200MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- SQL日志 -->
+    <appender name="SQL_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${SQL_LOG_FILE_HOME}/vcard-op-sql.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <!-- 触发策略，达到一定条件时将通知appender，触发滚动 -->
+            <maxFileSize>500MB</maxFileSize>
+        </rollingPolicy>
+    </appender>
+
+    <springProfile name="local">
+        <logger name="com.mds.matrix" level="DEBUG" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="APPLICATION_LOG"/>
+        </logger>
+        <logger name="com.mds.matrix" level="DEBUG" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="SQL_LOG"/>
+        </logger>
+    </springProfile>
+
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
