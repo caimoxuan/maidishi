@@ -22,14 +22,4 @@ public enum UserType implements EnumInf {
         this.message = message;
     }
 
-    @Override
-    public EnumInf getName(int code){
-        for(UserType type : UserType.values()){
-            if(type.code == code){
-                return type;
-            }
-        }
-        return null;
-    }
-
 }

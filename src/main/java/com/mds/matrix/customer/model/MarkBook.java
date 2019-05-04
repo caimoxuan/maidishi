@@ -2,6 +2,8 @@ package com.mds.matrix.customer.model;
 import java.util.Date;
 
 import java.io.Serializable;
+
+import com.mds.matrix.common.enums.MarkType;
 import lombok.Data;
 
 @Data
@@ -13,7 +15,7 @@ public class MarkBook implements Serializable {
 	/** 微信openId 小程序登录使用*/
 	private String openId;
 	/** 物品类型*/
-	private Integer markType;
+	private MarkType markType;
 	/** 物品关联id*/
 	private String markId;
 	/** 收藏名称*/

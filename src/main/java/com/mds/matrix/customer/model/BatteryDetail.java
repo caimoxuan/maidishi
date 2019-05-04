@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class BatteryDateil implements Serializable {
+public class BatteryDetail implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	/** 自增主键*/

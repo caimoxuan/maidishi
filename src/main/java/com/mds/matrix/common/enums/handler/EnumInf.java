@@ -8,6 +8,4 @@ public interface EnumInf {
 
     int getCode();
 
-    EnumInf getName(int code);
-
 }

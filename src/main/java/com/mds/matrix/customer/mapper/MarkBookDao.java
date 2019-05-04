@@ -14,7 +14,7 @@ public interface MarkBookDao{
 
 	int insert(MarkBook markBook);
 
-	int delete(MarkBook markBook);
+	int delete(Long id);
 
 	MarkBook getById(Long id);
 }

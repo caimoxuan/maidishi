@@ -27,7 +27,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     public ApiResult<List<User>> listCustomer(@RequestParam int pageNo,
                                               @RequestParam int pageSize) {
         log.info("get list customer : {}");
@@ -38,7 +38,7 @@ public class CustomerController {
         return result;
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/get", method = RequestMethod.POST)
     public ApiResult<User> getUser(@RequestParam String openId) {
         ApiResult<User> result = new ApiResult<>();
         result.setData(customerService.getById(openId));
@@ -57,8 +57,8 @@ public class CustomerController {
         return result;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ApiResult<String> create(@RequestParam String openId){
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ApiResult<String> createUser(@RequestParam String openId){
         ApiResult<String> result = new ApiResult<>();
         User user = new User();
         user.setUserType(UserType.CUSTOMER);
