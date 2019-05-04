@@ -2,6 +2,8 @@ package com.mds.matrix.customer.model;
 import java.util.Date;
 
 import java.io.Serializable;
+
+import com.mds.matrix.common.enums.CarStatus;
 import lombok.Data;
 
 @Data
@@ -13,7 +15,7 @@ public class Car implements Serializable {
 	/** 车架号*/
 	private String carId;
 	/** 车辆状态*/
-	private Integer carStatus;
+	private CarStatus carStatus;
 	/** 租赁时间（月）*/
 	private Integer rentTime;
 	/** 毛利润*/
