@@ -14,4 +14,7 @@ public class ErrorEnum {
 
     public static final MdsException FORBIDDEN_ACCESS = new MdsException(HttpStatus.FORBIDDEN.value(), "禁止登入");
 
+
+    public static final MdsException AUTH_FAIL = new MdsException(HttpStatus.UNAUTHORIZED.value(), "认证失败或丢失连接");
+
 }

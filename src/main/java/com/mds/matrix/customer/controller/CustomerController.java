@@ -45,18 +45,6 @@ public class CustomerController {
         return result;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ApiResult<String> login(@RequestParam String openId){
-        ApiResult<String> result = new ApiResult<>();
-        User user = customerService.getById(openId);
-        if(user == null){
-            result.fail(ErrorEnum.FORBIDDEN_ACCESS);
-            return result;
-        }
-        result.setData("success");
-        return result;
-    }
-
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ApiResult<String> createUser(@RequestParam String openId){
         ApiResult<String> result = new ApiResult<>();
