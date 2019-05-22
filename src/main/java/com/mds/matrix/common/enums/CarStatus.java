@@ -24,6 +24,7 @@ public enum CarStatus implements EnumInf {
     CarStatus(int code, String message){
         this.code = code;
         this.message = message;
+
     }
 
 }
