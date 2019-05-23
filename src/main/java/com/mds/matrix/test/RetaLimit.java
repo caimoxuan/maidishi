@@ -14,7 +14,7 @@ public class RetaLimit {
 
     private static Integer bucketMaxSize = 5;
 
-    private volatile AtomicInteger token = new AtomicInteger(0);
+    private AtomicInteger token = new AtomicInteger(0);
 
     RetaLimit(int timeWindow) {
         Timer timer = new Timer();
