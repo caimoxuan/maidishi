@@ -12,11 +12,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RetaLimit {
 
 
-    private static Integer bucketMaxSize = 6;
+    private static Integer bucketMaxSize = 5;
 
-    private AtomicInteger token = new AtomicInteger(0);
+    private volatile AtomicInteger token = new AtomicInteger(0);
 
-    RetaLimit(int timeWindow){
+    RetaLimit(int timeWindow) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -27,34 +27,34 @@ public class RetaLimit {
         }, 0, 1000 * timeWindow);
     }
 
-    public void increaseToken(){
-        if(isFull()){
+    public void increaseToken() {
+        if (isFull()) {
             return;
         }
-        for(int i = 0; i < bucketMaxSize; i++){
-            token.incrementAndGet();
+        for (int i = 0; i < bucketMaxSize; i++) {
+            token.getAndIncrement();
         }
     }
 
-    public int consumeToken(){
-        if(token.get() <= 0){
+    public synchronized int consumeToken() {
+        if (token.get() <= 0) {
             return token.get();
         }
-       return token.decrementAndGet();
+        return token.getAndDecrement();
     }
 
 
-    private boolean isFull(){
-        return token.get() >= bucketMaxSize-1;
+    private boolean isFull() {
+        return token.get() >= (bucketMaxSize);
     }
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         RetaLimit retaLimit = new RetaLimit(2);
-        new Thread(()->{
-            while(true){
+        new Thread(() -> {
+            while (true) {
                 int i = retaLimit.consumeToken();
-                if(i > 0) {
+                if (i > 0) {
                     System.out.println("开始消费： " + i);
                 }
             }

@@ -1,10 +1,12 @@
 package com.mds.matrix.customer.model;
-import java.util.Date;
-
-import java.io.Serializable;
 
 import com.mds.matrix.common.enums.UserType;
+import com.mds.matrix.test.felid.annotion.SetFeildValue;
+import com.mds.matrix.test.felid.service.ResourceService;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
 public class User implements Serializable {
@@ -19,6 +21,7 @@ public class User implements Serializable {
 	/** 微信openId 小程序登录使用*/
 	private String openId;
 	/** 微信昵称*/
+	@SetFeildValue(clazz = ResourceService.class, param = "openId", method = "getUser")
 	private String nickName;
 	/** 性别*/
 	private Integer gender;
